@@ -1,16 +1,22 @@
-
+import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import errorhandler from 'errorhandler';
 import cors from 'cors';
+import initSocket from 'socket.io';
 
 import {loggedIn} from 'app/auth/filters';
 import auth from './auth';
-import teams from './teams';
-import users from './users';
 import admin from './admin';
 import dashboard from './dashboard';
 const app = express();
+
+const server = http.createServer(app);
+const io = initSocket(server);
+
+io.on('connect', (socket) => {
+	socket.emit('notification', {msg: 'Connected to real time server successfully.'});
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
@@ -31,9 +37,7 @@ app.use('/dashboard', dashboard)
 
 app.get('/', (req, res) => {
   res.send({msg: 'Nodejs is live. Lets go and chanage the world.'});
-  //res.sendFile('/index.html', {root:__dirname});
 });
-
 
 app.use(loggedIn);
 app.use('/admin', admin);

@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "task": "NODE_PATH=. babel-node ./app/cli.js",
-  "server": "NODE_PATH=. babel-node ./app/server.js",
-  "nodemon:server": "NODE_PATH=. nodemon --exec \"babel-node\" ./app/server.js"
-},
-"babel": {
-  "presets": [
-    "es2015"
-  ]
-},
+    "task": "NODE_PATH=. babel-node ./app/cli.js",
+    "server": "NODE_PATH=. babel-node ./app/server.js",
+    "nodemon:server": "NODE_PATH=. nodemon --exec \"babel-node\" ./app/server.js"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -40,6 +40,7 @@
     "pg": "^6.1.2",
     "rand-token": "^0.3.0",
     "request-promise": "^4.1.1",
+    "socket.io": "^1.7.3",
     "tabel": "^1.6.1"
   }
 }
