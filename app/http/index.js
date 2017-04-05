@@ -9,15 +9,16 @@ import {loggedIn} from 'app/auth/filters';
 import auth from './auth';
 import admin from './admin';
 import dashboard from './dashboard';
-const app = express();
 
+const app = express();
 const server = http.createServer(app);
 const io = initSocket(server);
 
 io.on('connect', (socket) => {
-	socket.emit('notification', {msg: 'Connected to real time server successfully.'});
+  socket.emit('connected', {msg: 'Connected to real time server successfully.'});
 });
 
+app.use(function(req, res, next) { 'use strict'; req.io = io; next(); });
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 // parse application/json
@@ -33,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 'loopback');
 }
 app.use('/auth', auth);
-app.use('/dashboard', dashboard)
+app.use('/dashboard', dashboard);
 
 app.get('/', (req, res) => {
   res.send({msg: 'Nodejs is live. Lets go and chanage the world.'});

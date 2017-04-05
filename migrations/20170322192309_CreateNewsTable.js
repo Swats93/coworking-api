@@ -2,7 +2,7 @@ function up(knex, Promise) {
   return knex.schema.createTable('news', (t) => {
     t.uuid('id').primary();
     t.string('heading'); //title
-    t.string('content');
+    t.text('content');
     t.string('date_time');
     t.string('images');
     t.string('videos');
