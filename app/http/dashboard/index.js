@@ -7,11 +7,28 @@ const app = express();
 // get request for news where news are ordered by created date
 app.get('/news', async (req, res) => {
   const newsDetails = await table('news')
+    .select('id', 'heading', 'date_time', 'images', 'author')
     .orderBy('created_at', 'desc')
     .all()
   ;
   return res.status(200).send({msg: 'News', newsDetails});
 });
+
+app.get('/news/:newsId', newsExits, async (req, res) => {
+  return res.status(200).send({msg: 'News', news: req.news});
+});
+
+async function newsExits(req, res, next) {
+  if(isUuid(req.params.newsId)) {
+    const newz = await table('news').find(req.params.newsId);
+    req.news = newz;
+    return next();
+  } else {
+    return res.status(409).send({msg: 'News id is not valid'});
+  }
+}
+
+
 
 // get request for events where events are ordered by created date
 app.get('/events', async (req, res) => {

@@ -4,9 +4,11 @@ export default {
     db: {
       client: 'postgresql',
       connection: {
-        database: 'dev_cowork',
+        database: 'dev',
         host: 'localhost',
-        port: 5432
+        port: 5432,
+        user: 'dev',
+        password: 'dev'
       },
       pool: {
         min: 2,
