@@ -70,4 +70,28 @@ app.get('/events/:eventId', eventExits, async (req, res) => {
 //     return res.status(200).send({msg: 'Events', eventDetails});
 // });
 
+// get request for locations 
+app.get('/locations', async (req, res) => {
+  const locationDetails = await table('locations')
+    .select('id', 'name', 'description', 'address','images')
+    .all()
+  ;
+  console.log("inside locations");
+  return res.status(200).send({msg: 'Locations', locationDetails});
+});
+
+async function locationExits(req, res, next) {
+  if(isUuid(req.params.locationId)) {
+    const location = await table('locations').find(req.params.locationId);
+    req.location = location;
+    return next();
+  } else {
+    return res.status(409).send({msg: 'Location id is not valid'});
+  }
+}
+
+app.get('/locations/:locationId', locationExits, async (req, res) => {
+  return res.status(200).send({msg: 'Locations', location: req.location});
+});
+
 export default app;

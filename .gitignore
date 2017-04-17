@@ -1,7 +1,7 @@
 
 node_modules
 npm-debug.log
-config.js
+/config.js
 /*.pid
 *.rdb
 .DS_Store
